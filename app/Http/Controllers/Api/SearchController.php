@@ -12,7 +12,10 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->post('keyword');
-        $table_contents = DB::table('typecho_contents')->where('status', '=', 'publish')->where(function ($query) use ($keyword) {
+        $table_contents = DB::table('typecho_contents')
+            ->where('status', '=', 'publish')
+            ->where('type','=','post')
+            ->where(function ($query) use ($keyword) {
             $query->where('title', 'like', "%" . $keyword . "%")
                 ->orWhere('text', 'like', "%" . $keyword . "%");
         });
